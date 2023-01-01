@@ -2,6 +2,13 @@ function Ship(length, hit, sunkStatus) {
   return { length, hit, sunkStatus };
 }
 
-let Gary = Ship(6, 2, "no");
+function hitShip(shipObject) {
+  let numberOfHits = shipObject.hit;
+  numberOfHits = numberOfHits + 1;
+  shipObject.hit = numberOfHits;
+  return shipObject;
+}
 
-export { Ship, Gary };
+let Gary = Ship(6, 2, false);
+
+export { Ship, hitShip, Gary };
