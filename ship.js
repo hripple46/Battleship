@@ -6,6 +6,7 @@ function hit(shipObject) {
   let numberOfHits = shipObject.hit;
   numberOfHits = numberOfHits + 1;
   shipObject.hit = numberOfHits;
+  isSunk(shipObject);
   return shipObject;
 }
 
@@ -16,6 +17,4 @@ function isSunk(ship) {
   return ship;
 }
 
-let Gary = Ship(3, 2, false);
-
-export { Ship, hit, Gary, isSunk };
+export { Ship, hit, isSunk };

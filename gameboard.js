@@ -1,4 +1,4 @@
-import { Ship, hit } from "./ship.js";
+import { Ship, hit, isSunk } from "./ship.js";
 
 function Gameboard() {
   let grid = [];
@@ -179,10 +179,30 @@ function Gameboard() {
     let gridPoint = xCoordinate + yCoordinate;
     let selectedPoint = grid[gridPoint];
     if (selectedPoint != null && selectedPoint.sunkStatus == false) {
-      return hit(selectedPoint);
+      hit(selectedPoint);
+      //checks if all ships have sunk
+    } else if (selectedPoint == null) {
+      selectedPoint = { status: "miss!" };
     }
+
+    return selectedPoint;
   }
-  return { grid, placeShip, receiveAttack };
+  function checkIfAllShipsSunk() {
+    for (let i = 0; i < grid.length; i++) {
+      if (grid[i] != null && grid[i] != { status: "miss" }) {
+        if (grid[i].sunkStatus == true) {
+          continue;
+        } else if (grid[i].sunkStatus == false) {
+          return;
+        }
+      } else {
+        continue;
+      }
+    }
+    let gameOver = "game over";
+    return gameOver;
+  }
+  return { grid, placeShip, receiveAttack, checkIfAllShipsSunk };
 }
 
 export { Gameboard };

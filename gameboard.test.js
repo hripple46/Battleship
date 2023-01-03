@@ -1,23 +1,22 @@
 import { Gameboard } from "./gameboard.js";
-import { Ship, hit } from "./ship.js";
-let gary = Ship(5, 0, false);
+import { Ship, hit, isSunk } from "./ship.js";
 
 let garyBoard = Gameboard();
+let gary = Ship(2, 1, false);
+garyBoard.placeShip(gary, 5, "horizontal");
 
 test("gary (of length 4) has been placed vertically", () => {
-  expect(garyBoard.placeShip(gary, 5, "vertical")).toEqual([
-    gary,
-    gary,
-    gary,
-    gary,
-    gary,
-  ]);
+  expect(garyBoard.placeShip(gary, 5, "horizontal")).toEqual([gary, gary]);
 });
 
 test("gary has been hit", () => {
-  expect(garyBoard.receiveAttack("f", 0)).toStrictEqual({
-    length: 5,
-    hit: 1,
-    sunkStatus: false,
+  expect(garyBoard.receiveAttack("g", 0)).toEqual({
+    length: 2,
+    hit: 2,
+    sunkStatus: true,
   });
+});
+
+test("all ships have sunk", () => {
+  expect(garyBoard.checkIfAllShipsSunk()).toBe("game over");
 });

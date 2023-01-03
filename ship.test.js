@@ -1,4 +1,6 @@
-import { Ship, Gary, hit, isSunk } from "./ship";
+import { Ship, hit, isSunk } from "./ship";
+
+let Gary = Ship(3, 2, false);
 
 test("created ship object", () => {
   expect(Gary).toStrictEqual({
@@ -12,7 +14,7 @@ test("You hit my battlsehip!", () => {
   expect(hit(Gary)).toStrictEqual({
     length: 3,
     hit: 3,
-    sunkStatus: false,
+    sunkStatus: true,
   });
 });
 
