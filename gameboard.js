@@ -1,4 +1,4 @@
-import { Ship } from "./ship.js";
+import { Ship, hit } from "./ship.js";
 
 function Gameboard() {
   let grid = [];
@@ -173,10 +173,16 @@ function Gameboard() {
       }
     }
   }
-  return { grid, placeShip };
+  function receiveAttack(x, y) {
+    let xCoordinate = x.charCodeAt(0) - 97;
+    let yCoordinate = y * 10;
+    let gridPoint = xCoordinate + yCoordinate;
+    let selectedPoint = grid[gridPoint];
+    if (selectedPoint != null && selectedPoint.sunkStatus == false) {
+      return hit(selectedPoint);
+    }
+  }
+  return { grid, placeShip, receiveAttack };
 }
-let gary = Ship(3, 0, false);
-let garyBoard = Gameboard();
-garyBoard.placeShip(gary, 12, "horizontal");
 
 export { Gameboard };
