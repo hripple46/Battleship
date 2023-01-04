@@ -1,0 +1,20 @@
+.boardContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.Board2,
+.Board1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  width: 30%;
+  margin-bottom: 2em;
+  margin-right: 0;
+}
+
+.gridSpot {
+  display: inline-block;
+  border: 1px solid black;
+  height: 50px;
+}

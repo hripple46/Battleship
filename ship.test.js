@@ -1,4 +1,4 @@
-import { Ship, hit, isSunk } from "./ship";
+import { Ship, hit, isSunk } from "./src/ship";
 
 let Gary = Ship(3, 2, false);
 

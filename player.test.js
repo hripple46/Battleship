@@ -1,6 +1,6 @@
-import { Player, Computer } from "./player";
-import { Ship, hit, isSunk } from "./ship";
-import { Gameboard } from "./gameboard";
+import { Player, Computer } from "./src/player";
+import { Ship, hit, isSunk } from "./src/ship";
+import { Gameboard } from "./src/gameboard";
 let Henry = Player("Henry");
 let garyBoard = Gameboard();
 let Gary = Ship(2, 0, false);

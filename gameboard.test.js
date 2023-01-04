@@ -1,5 +1,5 @@
-import { Gameboard } from "./gameboard.js";
-import { Ship, hit, isSunk } from "./ship.js";
+import { Gameboard } from "./src/gameboard.js";
+import { Ship, hit, isSunk } from "./src/ship.js";
 
 let garyBoard = Gameboard();
 let gary = Ship(2, 1, false);
