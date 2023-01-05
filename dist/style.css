@@ -18,4 +18,18 @@
   display: inline-block;
   border: 1px solid black;
   height: 50px;
+  background-image: linear-gradient(
+    bottom,
+    rgb(171, 27, 27) 0%,
+    rgb(212, 51, 51) 100%
+  );
+}
+
+.playerGridSpot:hover,
+.computerGridSpot:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.playerGridSpot:active,
+.computerGridSpot:active {
+  background-color: rgba(0, 0, 0, 0.7);
 }
