@@ -74,14 +74,41 @@ let computersShips = [
   destroyer5Comp,
 ];
 
-//add ships to gameboards
+//the following placeShip functions are temporary placeholders to further test game cycle
+henrysBoard.placeShip(carrier1Comp, 7, "vertical");
+henrysBoard.placeShip(battleship1Comp, 3, "horizontal");
+henrysBoard.placeShip(battleship2Comp, 8, "horizontal");
+henrysBoard.placeShip(cruiser1Comp, 12, "horizontal");
+henrysBoard.placeShip(cruiser2Comp, 15, "horizontal");
+henrysBoard.placeShip(cruiser3Comp, 16, "horizontal");
+henrysBoard.placeShip(sub1Comp, 75, "vertical");
+henrysBoard.placeShip(sub2Comp, 76, "vertical");
+henrysBoard.placeShip(sub4Comp, 78, "vertical");
 
-for (let i = 0; i < playersShips.length; i++) {
-  henrysBoard.placeShip(playersShips[i], i, "horizontal");
-}
-for (let j = 0; j < computersShips.length; j++) {
-  compBoard.placeShip(computersShips[j], j, "horizontal");
-}
+henrysBoard.placeShip(destroyer1Comp, 80, "horizontal");
+
+henrysBoard.placeShip(destroyer2Comp, 97, "horizontal");
+henrysBoard.placeShip(destroyer3Comp, 82, "horizontal");
+henrysBoard.placeShip(destroyer4Comp, 87, "horizontal");
+henrysBoard.placeShip(destroyer5Comp, 90, "horizontal");
+
+compBoard.placeShip(carrier1Comp, 7, "vertical");
+compBoard.placeShip(battleship1Comp, 3, "horizontal");
+compBoard.placeShip(battleship2Comp, 8, "horizontal");
+compBoard.placeShip(cruiser1Comp, 12, "horizontal");
+compBoard.placeShip(cruiser2Comp, 15, "horizontal");
+compBoard.placeShip(cruiser3Comp, 16, "horizontal");
+compBoard.placeShip(sub1Comp, 75, "vertical");
+compBoard.placeShip(sub2Comp, 76, "vertical");
+compBoard.placeShip(sub4Comp, 78, "vertical");
+
+compBoard.placeShip(destroyer1Comp, 80, "horizontal");
+
+compBoard.placeShip(destroyer2Comp, 97, "horizontal");
+compBoard.placeShip(destroyer3Comp, 82, "horizontal");
+compBoard.placeShip(destroyer4Comp, 87, "horizontal");
+compBoard.placeShip(destroyer5Comp, 90, "horizontal");
+console.log(compBoard.grid);
 
 let gridPoint = document.createElement("div");
 gridPoint.setAttribute("div", "gridSpot");
@@ -101,6 +128,23 @@ let playersGridPoints = document.querySelectorAll(".playerGridSpot");
 for (let i = 0; i < playersGridPoints.length; i++) {
   playersGridPoints[i].addEventListener("click", () => {
     console.log(`Computer selects Player at ${i}`);
+    let yString = i.toString().charAt(0);
+    let y = parseInt(yString);
+    let xString = i.toString().charAt(1);
+    let xInt = parseInt(xString);
+    let x = String.fromCharCode(97 + xInt);
+    Comp.attack(henrysBoard, x, y);
+    if (henrysBoard.grid[i] == null) {
+      document.querySelector(`#player${i}`).innerText = "MISS";
+    } else if (
+      henrysBoard.grid[i] != null ||
+      henrysBoard.grid[i].sunkStatus == false
+    ) {
+      document.querySelector(`#player${i}`).innerText = "X";
+      document.querySelector(`#player${i}`).style.backgroundColor = "red";
+    } else {
+      document.querySelector(`#player${i}`).innerText = "MISS";
+    }
   });
 }
 let computersGridPoints = document.querySelectorAll(".computerGridSpot");
@@ -113,8 +157,16 @@ for (let i = 0; i < computersGridPoints.length; i++) {
     let xInt = parseInt(xString);
     let x = String.fromCharCode(97 + xInt);
     Henry.attack(compBoard, x, y);
-    if (compBoard.grid[i] != null || compBoard.grid[i].sunkStatus == false) {
+    if (compBoard.grid[i] == null) {
+      document.querySelector(`#computer${i}`).innerText = "MISS";
+    } else if (
+      compBoard.grid[i] != null ||
+      compBoard.grid[i].sunkStatus == false
+    ) {
       document.querySelector(`#computer${i}`).innerText = "X";
+      document.querySelector(`#computer${i}`).style.backgroundColor = "red";
+    } else {
+      document.querySelector(`#computer${i}`).innerText = "MISS";
     }
   });
 }
