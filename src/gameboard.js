@@ -174,8 +174,9 @@ function Gameboard() {
     }
   }
   function receiveAttack(x, y) {
-    let xCoordinate = x.charCodeAt(0) - 97;
-    let yCoordinate = y * 10;
+    let xInt = x.charCodeAt(0) - 97;
+    let xCoordinate = xInt * 10;
+    let yCoordinate = y;
     let gridPoint = xCoordinate + yCoordinate;
     let selectedPoint = grid[gridPoint];
     if (selectedPoint != null && selectedPoint.sunkStatus == false) {
@@ -193,14 +194,13 @@ function Gameboard() {
         if (grid[i].sunkStatus == true) {
           continue;
         } else if (grid[i].sunkStatus == false) {
-          return;
+          return false;
         }
       } else {
         continue;
       }
     }
-    let gameOver = "game over";
-    return gameOver;
+    return true;
   }
   return { grid, placeShip, receiveAttack, checkIfAllShipsSunk };
 }

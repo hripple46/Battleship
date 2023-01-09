@@ -110,6 +110,7 @@ compBoard.placeShip(destroyer4Comp, 87, "horizontal");
 compBoard.placeShip(destroyer5Comp, 90, "horizontal");
 console.log(compBoard.grid);
 
+//the following block of code add unique IDs to dom elements
 let gridPoint = document.createElement("div");
 gridPoint.setAttribute("div", "gridSpot");
 let playerBoard = document.querySelector(".Board1");
@@ -124,26 +125,40 @@ for (let x = 0; x < 100; x++) {
   playerBoard.appendChild(gridPoint);
   computersBoard.appendChild(gridPointComp);
 }
+
 let playersGridPoints = document.querySelectorAll(".playerGridSpot");
 for (let i = 0; i < playersGridPoints.length; i++) {
+  //initializing Xint here to prevent any bugs if selected point is first row
+  let xInt = 0;
   playersGridPoints[i].addEventListener("click", () => {
     console.log(`Computer selects Player at ${i}`);
-    let yString = i.toString().charAt(0);
-    let y = parseInt(yString);
-    let xString = i.toString().charAt(1);
-    let xInt = parseInt(xString);
+    //following formula prevents bugs if i is < 10
+    let y = Math.floor(i / 1) % 10;
+    let xInt = Math.floor(i / 10) % 10;
+    let xString = xInt.toString();
+    if (xString == "") {
+      xInt = 0;
+    }
     let x = String.fromCharCode(97 + xInt);
-    Comp.attack(henrysBoard, x, y);
-    if (henrysBoard.grid[i] == null) {
-      document.querySelector(`#player${i}`).innerText = "MISS";
-    } else if (
-      henrysBoard.grid[i] != null ||
-      henrysBoard.grid[i].sunkStatus == false
-    ) {
-      document.querySelector(`#player${i}`).innerText = "X";
-      document.querySelector(`#player${i}`).style.backgroundColor = "red";
+    if (playersGridPoints[i].innerText != "") {
+      return;
     } else {
-      document.querySelector(`#player${i}`).innerText = "MISS";
+      Comp.attack(henrysBoard, x, y);
+      if (henrysBoard.grid[i] == null) {
+        document.querySelector(`#player${i}`).innerText = "MISS";
+      } else if (
+        henrysBoard.grid[i] != null ||
+        henrysBoard.grid[i].sunkStatus == false
+      ) {
+        document.querySelector(`#player${i}`).innerText = "X";
+        document.querySelector(`#player${i}`).style.backgroundColor = "red";
+        console.log(henrysBoard.grid[i]);
+        if (henrysBoard.checkIfAllShipsSunk()) {
+          prompt("Computer beats Player");
+        }
+      } else {
+        document.querySelector(`#player${i}`).innerText = "MISS";
+      }
     }
   });
 }
@@ -165,6 +180,10 @@ for (let i = 0; i < computersGridPoints.length; i++) {
     ) {
       document.querySelector(`#computer${i}`).innerText = "X";
       document.querySelector(`#computer${i}`).style.backgroundColor = "red";
+      console.log(compBoard.grid[i]);
+      if (compBoard.checkIfAllShipsSunk()) {
+        prompt("Player beats Computer!");
+      }
     } else {
       document.querySelector(`#computer${i}`).innerText = "MISS";
     }
