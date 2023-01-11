@@ -1,3 +1,7 @@
+({
+  plugins: ["jsdom-quokka-plugin"],
+});
+
 import { Ship, hit, isSunk } from "./ship.js";
 import { Gameboard } from "./gameboard.js";
 import { Player, Computer } from "./player.js";
@@ -43,32 +47,33 @@ henrysBoard.placeShip(carrier1, 0, 1, "vertical");
 henrysBoard.placeShip(battleship1, 3, 1, "horizontal");
 henrysBoard.placeShip(battleship2, 8, 1, "horizontal");
 henrysBoard.placeShip(cruiser1, 4, 1, "horizontal");
-henrysBoard.placeShip(cruiser2, 5, 1, "horizontal");
-henrysBoard.placeShip(cruiser3, 6, 1, "horizontal");
+henrysBoard.placeShip(cruiser2, 5, 3, "horizontal");
+henrysBoard.placeShip(cruiser3, 6, 2, "horizontal");
 henrysBoard.placeShip(sub1, 7, 1, "vertical");
 henrysBoard.placeShip(sub2, 7, 6, "vertical");
-henrysBoard.placeShip(sub4, 8, 0, "horizontal");
-henrysBoard.placeShip(destroyer1, 8, 4, "horizontal");
+henrysBoard.placeShip(sub4, 8, 1, "horizontal");
+henrysBoard.placeShip(destroyer1, 8, 7, "horizontal");
 henrysBoard.placeShip(destroyer2, 9, 7, "horizontal");
 henrysBoard.placeShip(destroyer3, 9, 0, "horizontal");
 henrysBoard.placeShip(destroyer4, 1, 2, "vertical");
-henrysBoard.placeShip(destroyer5, 1, 5, "horizontal");
+henrysBoard.placeShip(destroyer5, 1, 7, "horizontal");
 
-compBoard.placeShip(carrier1, 0, 1, "vertical");
-compBoard.placeShip(battleship1, 3, 1, "horizontal");
-compBoard.placeShip(battleship2, 8, 1, "horizontal");
-compBoard.placeShip(cruiser1, 4, 1, "horizontal");
-compBoard.placeShip(cruiser2, 5, 1, "horizontal");
-compBoard.placeShip(cruiser3, 6, 1, "horizontal");
-compBoard.placeShip(sub1, 7, 1, "vertical");
-compBoard.placeShip(sub2, 7, 6, "vertical");
-compBoard.placeShip(sub4, 8, 0, "horizontal");
-compBoard.placeShip(destroyer1, 8, 4, "horizontal");
-compBoard.placeShip(destroyer2, 9, 7, "horizontal");
-compBoard.placeShip(destroyer3, 9, 0, "horizontal");
-compBoard.placeShip(destroyer4, 1, 2, "vertical");
-compBoard.placeShip(destroyer5, 1, 5, "horizontal");
+compBoard.placeShip(carrier1Comp, 0, 1, "vertical");
+compBoard.placeShip(battleship1Comp, 3, 1, "horizontal");
+compBoard.placeShip(battleship2Comp, 8, 1, "horizontal");
+compBoard.placeShip(cruiser1Comp, 4, 1, "horizontal");
+compBoard.placeShip(cruiser2Comp, 5, 3, "horizontal");
+compBoard.placeShip(cruiser3Comp, 6, 2, "horizontal");
+compBoard.placeShip(sub1Comp, 7, 1, "vertical");
+compBoard.placeShip(sub2Comp, 7, 6, "vertical");
+compBoard.placeShip(sub4Comp, 8, 1, "horizontal");
+compBoard.placeShip(destroyer1Comp, 8, 7, "horizontal");
+compBoard.placeShip(destroyer2Comp, 9, 7, "horizontal");
+compBoard.placeShip(destroyer3Comp, 9, 0, "horizontal");
+compBoard.placeShip(destroyer4Comp, 1, 2, "vertical");
+compBoard.placeShip(destroyer5Comp, 1, 7, "horizontal");
 
+console.log(henrysBoard.grid);
 //the following block of code add unique IDs to dom elements
 let gridPoint = document.createElement("div");
 gridPoint.setAttribute("div", "gridSpot");
