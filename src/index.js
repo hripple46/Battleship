@@ -22,24 +22,6 @@ let destroyer3 = Ship(2, 0, false);
 let destroyer4 = Ship(2, 0, false);
 let destroyer5 = Ship(2, 0, false);
 
-let playersShips = [
-  carrier1,
-  battleship1,
-  battleship2,
-  cruiser1,
-  cruiser2,
-  cruiser3,
-  sub1,
-  sub2,
-  sub3,
-  sub4,
-  destroyer1,
-  destroyer2,
-  destroyer3,
-  destroyer4,
-  destroyer5,
-];
-
 let carrier1Comp = Ship(5, 0, false);
 let battleship1Comp = Ship(4, 0, false);
 let battleship2Comp = Ship(4, 0, false);
@@ -56,59 +38,36 @@ let destroyer3Comp = Ship(2, 0, false);
 let destroyer4Comp = Ship(2, 0, false);
 let destroyer5Comp = Ship(2, 0, false);
 
-let computersShips = [
-  carrier1Comp,
-  battleship1Comp,
-  battleship2Comp,
-  cruiser1Comp,
-  cruiser2Comp,
-  cruiser3Comp,
-  sub1Comp,
-  sub2Comp,
-  sub3Comp,
-  sub4Comp,
-  destroyer1Comp,
-  destroyer2Comp,
-  destroyer3Comp,
-  destroyer4Comp,
-  destroyer5Comp,
-];
-
 //the following placeShip functions are temporary placeholders to further test game cycle
-henrysBoard.placeShip(carrier1Comp, 7, "vertical");
-henrysBoard.placeShip(battleship1Comp, 3, "horizontal");
-henrysBoard.placeShip(battleship2Comp, 8, "horizontal");
-henrysBoard.placeShip(cruiser1Comp, 12, "horizontal");
-henrysBoard.placeShip(cruiser2Comp, 15, "horizontal");
-henrysBoard.placeShip(cruiser3Comp, 16, "horizontal");
-henrysBoard.placeShip(sub1Comp, 75, "vertical");
-henrysBoard.placeShip(sub2Comp, 76, "vertical");
-henrysBoard.placeShip(sub4Comp, 78, "vertical");
+henrysBoard.placeShip(carrier1, 0, 1, "vertical");
+henrysBoard.placeShip(battleship1, 3, 1, "horizontal");
+henrysBoard.placeShip(battleship2, 8, 1, "horizontal");
+henrysBoard.placeShip(cruiser1, 4, 1, "horizontal");
+henrysBoard.placeShip(cruiser2, 5, 1, "horizontal");
+henrysBoard.placeShip(cruiser3, 6, 1, "horizontal");
+henrysBoard.placeShip(sub1, 7, 1, "vertical");
+henrysBoard.placeShip(sub2, 7, 6, "vertical");
+henrysBoard.placeShip(sub4, 8, 0, "horizontal");
+henrysBoard.placeShip(destroyer1, 8, 4, "horizontal");
+henrysBoard.placeShip(destroyer2, 9, 7, "horizontal");
+henrysBoard.placeShip(destroyer3, 9, 0, "horizontal");
+henrysBoard.placeShip(destroyer4, 1, 2, "vertical");
+henrysBoard.placeShip(destroyer5, 1, 5, "horizontal");
 
-henrysBoard.placeShip(destroyer1Comp, 80, "horizontal");
-
-henrysBoard.placeShip(destroyer2Comp, 97, "horizontal");
-henrysBoard.placeShip(destroyer3Comp, 82, "horizontal");
-henrysBoard.placeShip(destroyer4Comp, 87, "horizontal");
-henrysBoard.placeShip(destroyer5Comp, 90, "horizontal");
-
-compBoard.placeShip(carrier1Comp, 7, "vertical");
-compBoard.placeShip(battleship1Comp, 3, "horizontal");
-compBoard.placeShip(battleship2Comp, 8, "horizontal");
-compBoard.placeShip(cruiser1Comp, 12, "horizontal");
-compBoard.placeShip(cruiser2Comp, 15, "horizontal");
-compBoard.placeShip(cruiser3Comp, 16, "horizontal");
-compBoard.placeShip(sub1Comp, 75, "vertical");
-compBoard.placeShip(sub2Comp, 76, "vertical");
-compBoard.placeShip(sub4Comp, 78, "vertical");
-
-compBoard.placeShip(destroyer1Comp, 80, "horizontal");
-
-compBoard.placeShip(destroyer2Comp, 97, "horizontal");
-compBoard.placeShip(destroyer3Comp, 82, "horizontal");
-compBoard.placeShip(destroyer4Comp, 87, "horizontal");
-compBoard.placeShip(destroyer5Comp, 90, "horizontal");
-console.log(compBoard.grid);
+compBoard.placeShip(carrier1, 0, 1, "vertical");
+compBoard.placeShip(battleship1, 3, 1, "horizontal");
+compBoard.placeShip(battleship2, 8, 1, "horizontal");
+compBoard.placeShip(cruiser1, 4, 1, "horizontal");
+compBoard.placeShip(cruiser2, 5, 1, "horizontal");
+compBoard.placeShip(cruiser3, 6, 1, "horizontal");
+compBoard.placeShip(sub1, 7, 1, "vertical");
+compBoard.placeShip(sub2, 7, 6, "vertical");
+compBoard.placeShip(sub4, 8, 0, "horizontal");
+compBoard.placeShip(destroyer1, 8, 4, "horizontal");
+compBoard.placeShip(destroyer2, 9, 7, "horizontal");
+compBoard.placeShip(destroyer3, 9, 0, "horizontal");
+compBoard.placeShip(destroyer4, 1, 2, "vertical");
+compBoard.placeShip(destroyer5, 1, 5, "horizontal");
 
 //the following block of code add unique IDs to dom elements
 let gridPoint = document.createElement("div");
@@ -129,30 +88,35 @@ for (let x = 0; x < 100; x++) {
 let playersGridPoints = document.querySelectorAll(".playerGridSpot");
 for (let i = 0; i < playersGridPoints.length; i++) {
   //initializing Xint here to prevent any bugs if selected point is first row
-  let xInt = 0;
+  let x = 0;
+  let y = 0;
+  let xString = "";
+  let yString = "";
   playersGridPoints[i].addEventListener("click", () => {
     console.log(`Computer selects Player at ${i}`);
     //following formula prevents bugs if i is < 10
-    let y = Math.floor(i / 1) % 10;
-    let xInt = Math.floor(i / 10) % 10;
-    let xString = xInt.toString();
-    if (xString == "") {
-      xInt = 0;
+    if (i < 10) {
+      x = 0;
+      y = i;
+    } else {
+      xString = String(i).charAt(0);
+      x = Number(xString);
+      yString = String(i).charAt(1);
+      y = Number(yString);
     }
-    let x = String.fromCharCode(97 + xInt);
     if (playersGridPoints[i].innerText != "") {
       return;
     } else {
       Comp.attack(henrysBoard, x, y);
-      if (henrysBoard.grid[i] == null) {
+      if (Object.values(henrysBoard.grid[x][y]).includes("miss!")) {
         document.querySelector(`#player${i}`).innerText = "MISS";
       } else if (
-        henrysBoard.grid[i] != null ||
-        henrysBoard.grid[i].sunkStatus == false
+        henrysBoard.grid[x][y] != null ||
+        henrysBoard.grid[x][y].sunkStatus == false
       ) {
         document.querySelector(`#player${i}`).innerText = "X";
         document.querySelector(`#player${i}`).style.backgroundColor = "red";
-        console.log(henrysBoard.grid[i]);
+        console.log(henrysBoard.grid[x][y]);
         if (henrysBoard.checkIfAllShipsSunk()) {
           prompt("Computer beats Player");
         }
@@ -165,27 +129,40 @@ for (let i = 0; i < playersGridPoints.length; i++) {
 let computersGridPoints = document.querySelectorAll(".computerGridSpot");
 for (let i = 0; i < computersGridPoints.length; i++) {
   computersGridPoints[i].addEventListener("click", () => {
-    console.log(`Player selects Computer at ${i}`);
-    let yString = i.toString().charAt(0);
-    let y = parseInt(yString);
-    let xString = i.toString().charAt(1);
-    let xInt = parseInt(xString);
-    let x = String.fromCharCode(97 + xInt);
-    Henry.attack(compBoard, x, y);
-    if (compBoard.grid[i] == null) {
-      document.querySelector(`#computer${i}`).innerText = "MISS";
-    } else if (
-      compBoard.grid[i] != null ||
-      compBoard.grid[i].sunkStatus == false
-    ) {
-      document.querySelector(`#computer${i}`).innerText = "X";
-      document.querySelector(`#computer${i}`).style.backgroundColor = "red";
-      console.log(compBoard.grid[i]);
-      if (compBoard.checkIfAllShipsSunk()) {
-        prompt("Player beats Computer!");
-      }
+    let x = 0;
+    let y = 0;
+    let xString = "";
+    let yString = "";
+    console.log(`Computer selects Player at ${i}`);
+    //following formula prevents bugs if i is < 10
+    if (i < 10) {
+      x = 0;
+      y = i;
     } else {
-      document.querySelector(`#computer${i}`).innerText = "MISS";
+      xString = String(i).charAt(0);
+      x = Number(xString);
+      yString = String(i).charAt(1);
+      y = Number(yString);
+    }
+    if (computersGridPoints[i].innerText != "") {
+      return;
+    } else {
+      Henry.attack(compBoard, x, y);
+      if (Object.values(compBoard.grid[x][y]).includes("miss!")) {
+        document.querySelector(`#computer${i}`).innerText = "MISS";
+      } else if (
+        compBoard.grid[x][y] != null ||
+        compBoard.grid[x][y].sunkStatus == false
+      ) {
+        document.querySelector(`#computer${i}`).innerText = "X";
+        document.querySelector(`#computer${i}`).style.backgroundColor = "red";
+        console.log(compBoard.grid[x][y]);
+        if (compBoard.checkIfAllShipsSunk()) {
+          prompt("Player beats Computer!");
+        }
+      } else {
+        document.querySelector(`#computer${i}`).innerText = "MISS";
+      }
     }
   });
 }

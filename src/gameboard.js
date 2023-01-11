@@ -2,206 +2,209 @@ import { Ship, hit, isSunk } from "./ship.js";
 
 function Gameboard() {
   let grid = [];
-  grid.length = 100;
+  grid.length = 10;
   for (let j = 0; j < grid.length; j++) {
-    grid[j] = null;
+    grid[j] = [null, null, null, null, null, null, null, null, null, null];
   }
 
-  function placeShip(ship, startingPoint, startingDirection) {
-    for (let i = startingPoint; i < grid.length; i++) {
-      if (startingDirection == "horizontal") {
-        if (ship.length == 2) {
-          if (grid[i] == null && grid[i + 1] == null) {
-            grid[i] = ship;
-            grid[i + 1] = ship;
-            return grid.slice(i, i + 2);
-          } else if (grid[i] == null && grid[i - 1] == null) {
-            grid[i] = ship;
-            grid[i - 1] = ship;
-            return grid.slice(i, i - 2);
-          }
-        } else if (ship.length == 3) {
-          if (grid[i] == null && grid[i + 1] == null && grid[i + 2] == null) {
-            grid[i] = ship;
-            grid[i + 1] = ship;
-            grid[i + 2] = ship;
-            return grid.slice(i, i + 3);
-          } else if (
-            grid[i] == null &&
-            grid[i - 1] == null &&
-            grid[i - 2] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 1] = ship;
-            grid[i - 2] = ship;
-            return grid.slice(i, i - 3);
-          }
-        } else if (ship.length == 4) {
-          if (grid[i] == null && grid[i + 1] == null) {
-            grid[i] = ship;
-            grid[i + 1] = ship;
-            grid[i + 2] = ship;
-            grid[i + 3] = ship;
-            return grid.slice(i, i + 4);
-          } else if (
-            grid[i] == null &&
-            grid[i - 1] == null &&
-            grid[i - 2] == null &&
-            grid[i - 3] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 1] = ship;
-            grid[i - 2] = ship;
-            grrid[i - 3] = ship;
-            return grid.slice(i, i - 4);
-          }
-        } else if (ship.length == 5) {
-          if (grid[i] == null && grid[i + 1] == null) {
-            grid[i] = ship;
-            grid[i + 1] = ship;
-            grid[i + 2] = ship;
-            grid[i + 3] = ship;
-            grid[i + 4] = ship;
-            return grid.slice(i, i + 5);
-          } else if (
-            grid[i] == null &&
-            grid[i - 1] == null &&
-            grid[i - 2] == null &&
-            grid[i - 3] == null &&
-            grid[i - 4] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 1] = ship;
-            grid[i - 2] = ship;
-            grrid[i - 3] = ship;
-            grid[i - 4] = ship;
-            return grid.slice(i, i - 5);
-          }
+  function placeShip(ship, startingPoint1, startingPoint2, startingDirection) {
+    if (startingDirection == "horizontal") {
+      if (ship.length == 2) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 + 1] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 + 1] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 - 1] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 - 1] = ship;
         }
-      } else if (startingDirection == "vertical") {
-        if (ship.length == 2) {
-          if (grid[i] == null && grid[i + 10] == null) {
-            grid[i] = ship;
-            grid[i + 10] = ship;
-            return [grid[i], grid[i + 10]];
-          } else if (grid[i] == null && grid[i - 10] == null) {
-            grid[i] = ship;
-            grid[i - 10] = ship;
-            return [grid[i], grid[i - 10]];
-          }
-        } else if (ship.length == 3) {
-          if (grid[i] == null && grid[i + 10] == null && grid[i + 20] == null) {
-            grid[i] = ship;
-            grid[i + 10] = ship;
-            grid[i + 20] = ship;
-            return [grid[i], grid[i + 10], grid[i + 20]];
-          } else if (
-            grid[i] == null &&
-            grid[i - 10] == null &&
-            grid[i - 20] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 10] = ship;
-            grid[i - 20] = ship;
-            return [grid[i], grid[i - 10], grid[i - 20]];
-          }
-        } else if (ship.length == 4) {
-          if (
-            grid[i] == null &&
-            grid[i + 10] == null &&
-            grid[i + 20] == null &&
-            grid[i + 30] == null
-          ) {
-            grid[i] = ship;
-            grid[i + 10] = ship;
-            grid[i + 20] = ship;
-            grid[i + 30] = ship;
-            return [grid[i], grid[i + 10], grid[i + 20], grid[i + 30]];
-          } else if (
-            grid[i] == null &&
-            grid[i - 10] == null &&
-            grid[i - 20] == null &&
-            grid[i - 30] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 10] = ship;
-            grid[i - 20] = ship;
-            grid[i - 30] = ship;
-            return [grid[i], grid[i - 10], grid[i - 20], grid[i - 30]];
-          }
-        } else if (ship.length == 5) {
-          if (
-            grid[i] == null &&
-            grid[i + 10] == null &&
-            grid[i + 20] == null &&
-            grid[i + 30] == null &&
-            grid[i + 40] == null
-          ) {
-            grid[i] = ship;
-            grid[i + 10] = ship;
-            grid[i + 20] = ship;
-            grid[i + 30] = ship;
-            grid[i + 40] = ship;
-            return [
-              grid[i],
-              grid[i + 10],
-              grid[i + 20],
-              grid[i + 30],
-              grid[i + 40],
-            ];
-          } else if (
-            grid[i] == null &&
-            grid[i - 10] == null &&
-            grid[i - 20] == null &&
-            grid[i - 30] == null &&
-            grid[i - 40] == null
-          ) {
-            grid[i] = ship;
-            grid[i - 10] = ship;
-            grid[i - 20] = ship;
-            grid[i - 30] = ship;
-            grid[i - 40] = ship;
-            return [
-              grid[i],
-              grid[i - 10],
-              grid[i - 20],
-              grid[i - 30],
-              grid[i - 40],
-            ];
-          }
+      } else if (ship.length == 3) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 + 1] == null &&
+          grid[startingPoint1][startingPoint2 + 2]
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 + 1] = ship;
+          grid[startingPoint1][startingPoint2 + 2] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 - 1] == null &&
+          grid[startingPoint1][startingPoint2 - 2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 - 1] = ship;
+          grid[startingPoint1][startingPoint2 - 2] = ship;
+        }
+      } else if (ship.length == 4) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 + 1] == null &&
+          grid[startingPoint1][startingPoint2 + 2] == null &&
+          grid[startingPoint1][startingPoint2 + 3] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 + 1] = ship;
+          grid[startingPoint1][startingPoint2 + 2] = ship;
+          grid[startingPoint1][startingPoint2 + 3] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 - 1] == null &&
+          grid[startingPoint1][startingPoint2 - 2] == null &&
+          grid[startingPoint1][startingPoint2 - 3] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 - 1] = ship;
+          grid[startingPoint1][startingPoint2 - 2] = ship;
+          grid[startingPoint1][startingPoint2 - 3] = ship;
+        }
+      } else if (ship.length == 5) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 + 1] == null &&
+          grid[startingPoint1][startingPoint2 + 2] == null &&
+          grid[startingPoint1][startingPoint2 + 3] == null &&
+          grid[startingPoint1][startingPoint2 + 4] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 + 1] = ship;
+          grid[startingPoint1][startingPoint2 + 2] = ship;
+          grid[startingPoint1][startingPoint2 + 3] = ship;
+          grid[startingPoint1][startingPoint2 + 4] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1][startingPoint2 - 1] == null &&
+          grid[startingPoint1][startingPoint2 - 2] == null &&
+          grid[startingPoint1][startingPoint2 - 3] == null &&
+          grid[startingPoint1][startingPoint2 - 4] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1][startingPoint2 - 1] = ship;
+          grid[startingPoint1][startingPoint2 - 2] = ship;
+          grid[startingPoint1][startingPoint2 - 3] = ship;
+          grid[startingPoint1][startingPoint2 - 4] = ship;
+        }
+      }
+    } else if (startingDirection == "vertical") {
+      if (ship.length == 2) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 + 1][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 + 1][startingPoint2] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 - 1][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 - 1][startingPoint2] = ship;
+        }
+      } else if (ship.length == 3) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 + 1][startingPoint2] == null &&
+          grid[startingPoint1 + 2][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 + 1][startingPoint2] = ship;
+          grid[startingPoint1 + 2][startingPoint2] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 - 1][startingPoint2] == null &&
+          grid[startingPoint1 - 2][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 - 1][startingPoint2] = ship;
+          grid[startingPoint1 - 2][startingPoint2] = ship;
+        }
+      } else if (ship.length == 4) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 + 1][startingPoint2] == null &&
+          grid[startingPoint1 + 2][startingPoint2] == null &&
+          grid[startingPoint1 + 3][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 + 1][startingPoint2] = ship;
+          grid[startingPoint1 + 2][startingPoint2] = ship;
+          grid[startingPoint1 + 3][startingPoint2] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 - 1][startingPoint2] == null &&
+          grid[startingPoint1 - 2][startingPoint2] == null &&
+          grid[startingPoint1 - 3][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 - 1][startingPoint2] = ship;
+          grid[startingPoint1 - 2][startingPoint2] = ship;
+          grid[startingPoint1 - 3][startingPoint2] = ship;
+        }
+      } else if (ship.length == 5) {
+        if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 + 1][startingPoint2] == null &&
+          grid[startingPoint1 + 2][startingPoint2] == null &&
+          grid[startingPoint1 + 3][startingPoint2] == null &&
+          grid[startingPoint1 + 4][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 + 1][startingPoint2] = ship;
+          grid[startingPoint1 + 2][startingPoint2] = ship;
+          grid[startingPoint1 + 3][startingPoint2] = ship;
+          grid[startingPoint1 + 4][startingPoint2] = ship;
+        } else if (
+          grid[startingPoint1][startingPoint2] == null &&
+          grid[startingPoint1 - 1][startingPoint2] == null &&
+          grid[startingPoint1 - 2][startingPoint2] == null &&
+          grid[startingPoint1 - 3][startingPoint2] == null &&
+          grid[startingPoint1 - 4][startingPoint2] == null
+        ) {
+          grid[startingPoint1][startingPoint2] = ship;
+          grid[startingPoint1 - 1][startingPoint2] = ship;
+          grid[startingPoint1 - 2][startingPoint2] = ship;
+          grid[startingPoint1 - 3][startingPoint2] = ship;
+          grid[startingPoint1 - 4][startingPoint2] = ship;
         }
       }
     }
+    return (
+      grid[startingPoint1][startingPoint2],
+      grid[startingPoint1][startingPoint2 + 1]
+    );
   }
   function receiveAttack(x, y) {
-    let xInt = x.charCodeAt(0) - 97;
-    let xCoordinate = xInt * 10;
-    let yCoordinate = y;
-    let gridPoint = xCoordinate + yCoordinate;
-    let selectedPoint = grid[gridPoint];
-    if (selectedPoint != null && selectedPoint.sunkStatus == false) {
-      hit(selectedPoint);
+    if (grid[x][y] != null && grid[x][y].sunkStatus == false) {
+      hit(grid[x][y]);
       //checks if all ships have sunk
-    } else if (selectedPoint == null) {
-      selectedPoint = { status: "miss!" };
+    } else if (grid[x][y] == null) {
+      grid[x][y] = { status: "miss!" };
     }
 
-    return selectedPoint;
+    return grid[x][y];
   }
   function checkIfAllShipsSunk() {
     for (let i = 0; i < grid.length; i++) {
-      if (grid[i] != null && grid[i] != { status: "miss" }) {
-        if (grid[i].sunkStatus == true) {
+      for (let j = 0; j < grid[i].length; j++) {
+        if (grid[i][j] != null && grid[i][j] != { status: "miss" }) {
+          if (grid[i][j].sunkStatus == true) {
+            continue;
+          } else if (grid[i][j].sunkStatus == false) {
+            return false;
+          }
+        } else {
           continue;
-        } else if (grid[i].sunkStatus == false) {
-          return false;
         }
-      } else {
-        continue;
       }
     }
     return true;
   }
+
   return { grid, placeShip, receiveAttack, checkIfAllShipsSunk };
 }
 

@@ -4,12 +4,12 @@ import { Gameboard } from "./src/gameboard";
 let Henry = Player("Henry");
 let garyBoard = Gameboard();
 let Gary = Ship(2, 0, false);
-garyBoard.placeShip(Gary, 1, "horizontal");
+garyBoard.placeShip(Gary, 1, 2, "horizontal");
 
 let comp = Computer();
 
 test("Player attacks garyBoard", () => {
-  expect(Henry.attack(garyBoard, "b", 0)).toEqual({
+  expect(Henry.attack(garyBoard, 1, 3)).toEqual({
     length: 2,
     hit: 1,
     sunkStatus: false,
@@ -17,5 +17,5 @@ test("Player attacks garyBoard", () => {
 });
 
 test("Computer attacks", () => {
-  expect(comp.attack(garyBoard)).toEqual({ status: "miss!" });
+  expect(comp.attack(garyBoard, 2, 3)).toEqual({ status: "miss!" });
 });
