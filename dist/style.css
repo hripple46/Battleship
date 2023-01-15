@@ -15,9 +15,11 @@
 
 .playerGridSpot,
 .computerGridSpot {
+  margin: 0%;
   display: inline-block;
   border: 1px solid black;
-  height: 50px;
+  height: 2em;
+  overflow: hidden;
   background-image: linear-gradient(
     bottom,
     rgb(171, 27, 27) 0%,
