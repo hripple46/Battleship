@@ -6,6 +6,9 @@ import { Ship, hit, isSunk } from "./ship.js";
 import { Gameboard } from "./gameboard.js";
 import { Player, Computer } from "./player.js";
 
+let player1Counter = 0;
+let player2Counter = 0;
+
 let Henry = Player("Henry");
 let Comp = Computer();
 let henrysBoard = Gameboard();
@@ -98,76 +101,93 @@ for (let i = 0; i < playersGridPoints.length; i++) {
   let xString = "";
   let yString = "";
   playersGridPoints[i].addEventListener("click", () => {
-    console.log(`Computer selects Player at ${i}`);
-    //following formula prevents bugs if i is < 10
-    if (i < 10) {
-      x = 0;
-      y = i;
-    } else {
-      xString = String(i).charAt(0);
-      x = Number(xString);
-      yString = String(i).charAt(1);
-      y = Number(yString);
-    }
-    if (playersGridPoints[i].innerText != "") {
-      return;
-    } else {
-      Comp.attack(henrysBoard, x, y);
-      if (Object.values(henrysBoard.grid[x][y]).includes("miss!")) {
-        document.querySelector(`#player${i}`).innerText = "MISS";
-      } else if (
-        henrysBoard.grid[x][y] != null ||
-        henrysBoard.grid[x][y].sunkStatus == false
-      ) {
-        document.querySelector(`#player${i}`).innerText = "X";
-        document.querySelector(`#player${i}`).style.backgroundColor = "red";
-        console.log(henrysBoard.grid[x][y]);
-        if (henrysBoard.checkIfAllShipsSunk()) {
-          prompt("Computer beats Player");
-        }
+    console.log(player1Counter, player2Counter);
+    if (
+      compBoard.checkPlayerTurn(player1Counter, player2Counter) ==
+      "Player 1s Turn"
+    ) {
+      player1Counter += 1;
+      console.log(`Computer selects Player at ${i}`);
+      //following formula prevents bugs if i is < 10
+      if (i < 10) {
+        x = 0;
+        y = i;
       } else {
-        document.querySelector(`#player${i}`).innerText = "MISS";
+        xString = String(i).charAt(0);
+        x = Number(xString);
+        yString = String(i).charAt(1);
+        y = Number(yString);
       }
+      if (playersGridPoints[i].innerText != "") {
+        return;
+      } else {
+        Comp.attack(henrysBoard, x, y);
+        if (Object.values(henrysBoard.grid[x][y]).includes("miss!")) {
+          document.querySelector(`#player${i}`).innerText = "MISS";
+        } else if (
+          henrysBoard.grid[x][y] != null ||
+          henrysBoard.grid[x][y].sunkStatus == false
+        ) {
+          document.querySelector(`#player${i}`).innerText = "X";
+          document.querySelector(`#player${i}`).style.backgroundColor = "red";
+          console.log(henrysBoard.grid[x][y]);
+          if (henrysBoard.checkIfAllShipsSunk()) {
+            prompt("Computer beats Player");
+          }
+        } else {
+          document.querySelector(`#player${i}`).innerText = "MISS";
+        }
+      }
+    } else {
+      prompt("Not Your Turn");
     }
   });
 }
 let computersGridPoints = document.querySelectorAll(".computerGridSpot");
 for (let i = 0; i < computersGridPoints.length; i++) {
   computersGridPoints[i].addEventListener("click", () => {
-    let x = 0;
-    let y = 0;
-    let xString = "";
-    let yString = "";
-    console.log(`Computer selects Player at ${i}`);
-    //following formula prevents bugs if i is < 10
-    if (i < 10) {
-      x = 0;
-      y = i;
-    } else {
-      xString = String(i).charAt(0);
-      x = Number(xString);
-      yString = String(i).charAt(1);
-      y = Number(yString);
-    }
-    if (computersGridPoints[i].innerText != "") {
-      return;
-    } else {
-      Henry.attack(compBoard, x, y);
-      if (Object.values(compBoard.grid[x][y]).includes("miss!")) {
-        document.querySelector(`#computer${i}`).innerText = "MISS";
-      } else if (
-        compBoard.grid[x][y] != null ||
-        compBoard.grid[x][y].sunkStatus == false
-      ) {
-        document.querySelector(`#computer${i}`).innerText = "X";
-        document.querySelector(`#computer${i}`).style.backgroundColor = "red";
-        console.log(compBoard.grid[x][y]);
-        if (compBoard.checkIfAllShipsSunk()) {
-          prompt("Player beats Computer!");
-        }
+    if (
+      henrysBoard.checkPlayerTurn(player1Counter, player2Counter) ==
+      "Player 2s Turn"
+    ) {
+      player2Counter += 1;
+      let x = 0;
+      let y = 0;
+      let xString = "";
+      let yString = "";
+      console.log(`Computer selects Player at ${i}`);
+      //following formula prevents bugs if i is < 10
+      if (i < 10) {
+        x = 0;
+        y = i;
       } else {
-        document.querySelector(`#computer${i}`).innerText = "MISS";
+        xString = String(i).charAt(0);
+        x = Number(xString);
+        yString = String(i).charAt(1);
+        y = Number(yString);
       }
+      if (computersGridPoints[i].innerText != "") {
+        return;
+      } else {
+        Henry.attack(compBoard, x, y);
+        if (Object.values(compBoard.grid[x][y]).includes("miss!")) {
+          document.querySelector(`#computer${i}`).innerText = "MISS";
+        } else if (
+          compBoard.grid[x][y] != null ||
+          compBoard.grid[x][y].sunkStatus == false
+        ) {
+          document.querySelector(`#computer${i}`).innerText = "X";
+          document.querySelector(`#computer${i}`).style.backgroundColor = "red";
+          console.log(compBoard.grid[x][y]);
+          if (compBoard.checkIfAllShipsSunk()) {
+            prompt("Player beats Computer!");
+          }
+        } else {
+          document.querySelector(`#computer${i}`).innerText = "MISS";
+        }
+      }
+    } else {
+      prompt("Not Your Turn");
     }
   });
 }

@@ -204,8 +204,21 @@ function Gameboard() {
     }
     return true;
   }
+  function checkPlayerTurn(player1Count, player2Count) {
+    if (player1Count > player2Count) {
+      return "Player 2s Turn";
+    } else {
+      return "Player 1s Turn";
+    }
+  }
 
-  return { grid, placeShip, receiveAttack, checkIfAllShipsSunk };
+  return {
+    grid,
+    placeShip,
+    receiveAttack,
+    checkIfAllShipsSunk,
+    checkPlayerTurn,
+  };
 }
 
 export { Gameboard };
