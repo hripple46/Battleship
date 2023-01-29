@@ -139,49 +139,53 @@ for (let i = 0; i < playersGridPoints.length; i++) {
         }
       }
     } else {
-      //the below code automates a computer's turn by generating random integer for the gridpoint selection
-      let computersGridPoints = document.querySelectorAll(".computerGridSpot");
-
-      let j = compBoard.getRandomArbitrary(0, 100);
-      console.log(j);
-      player2Counter += 1;
-      let x = 0;
-      let y = 0;
-      let xString = "";
-      let yString = "";
-      console.log(`Computer selects Player at ${j}`);
-      //following formula prevents bugs if i is < 10
-      if (j < 10) {
-        x = 0;
-        y = j;
-      } else {
-        xString = String(j).charAt(0);
-        x = Number(xString);
-        yString = String(j).charAt(1);
-        y = Number(yString);
-      }
-      if (computersGridPoints[j].innerText != "") {
-        return;
-      } else {
-        Henry.attack(compBoard, x, y);
-        if (Object.values(compBoard.grid[x][y]).includes("miss!")) {
-          document.querySelector(`#computer${j}`).innerText = "MISS";
-        } else if (
-          compBoard.grid[x][y] != null ||
-          compBoard.grid[x][y].sunkStatus == false
-        ) {
-          document.querySelector(`#computer${j}`).innerText = "X";
-          document.querySelector(`#computer${j}`).style.backgroundColor = "red";
-          console.log(compBoard.grid[x][y]);
-          if (compBoard.checkIfAllShipsSunk()) {
-            prompt("Player beats Computer!");
-          }
-        } else {
-          document.querySelector(`#computer${j}`).innerText = "MISS";
-        }
-      }
+      randomComputerSelect();
     }
   });
+}
+
+function randomComputerSelect() {
+  let computersGridPoints = document.querySelectorAll(".computerGridSpot");
+
+  let j = compBoard.getRandomArbitrary(0, 100);
+  console.log(j);
+  player2Counter += 1;
+  let x = 0;
+  let y = 0;
+  let xString = "";
+  let yString = "";
+  console.log(`Computer selects Player at ${j}`);
+  //following formula prevents bugs if i is < 10
+  if (j < 10) {
+    x = 0;
+    y = j;
+  } else {
+    xString = String(j).charAt(0);
+    x = Number(xString);
+    yString = String(j).charAt(1);
+    y = Number(yString);
+  }
+  if (computersGridPoints[j].innerText != "") {
+    player2Counter -= 1;
+    return randomComputerSelect();
+  } else {
+    Henry.attack(compBoard, x, y);
+    if (Object.values(compBoard.grid[x][y]).includes("miss!")) {
+      document.querySelector(`#computer${j}`).innerText = "MISS";
+    } else if (
+      compBoard.grid[x][y] != null ||
+      compBoard.grid[x][y].sunkStatus == false
+    ) {
+      document.querySelector(`#computer${j}`).innerText = "X";
+      document.querySelector(`#computer${j}`).style.backgroundColor = "red";
+      console.log(compBoard.grid[x][y]);
+      if (compBoard.checkIfAllShipsSunk()) {
+        prompt("Player beats Computer!");
+      }
+    } else {
+      document.querySelector(`#computer${j}`).innerText = "MISS";
+    }
+  }
 }
 //editing out below functions to autp-play Computer's turns
 /*
