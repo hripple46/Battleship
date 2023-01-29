@@ -211,6 +211,9 @@ function Gameboard() {
       return "Player 1s Turn";
     }
   }
+  function getRandomArbitrary(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 
   return {
     grid,
@@ -218,6 +221,7 @@ function Gameboard() {
     receiveAttack,
     checkIfAllShipsSunk,
     checkPlayerTurn,
+    getRandomArbitrary,
   };
 }
 
