@@ -101,46 +101,46 @@ for (let i = 0; i < playersGridPoints.length; i++) {
   let xString = "";
   let yString = "";
   playersGridPoints[i].addEventListener("click", () => {
-    console.log(player1Counter, player2Counter);
-    if (
+    //commenting out the turn counter and having the first player move trigger the the game loop
+    //console.log(player1Counter, player2Counter);
+    /*if (
       compBoard.checkPlayerTurn(player1Counter, player2Counter) ==
       "Player 1s Turn"
     ) {
       player1Counter += 1;
-      console.log(`Computer selects Player at ${i}`);
-      //following formula prevents bugs if i is < 10
-      if (i < 10) {
-        x = 0;
-        y = i;
-      } else {
-        xString = String(i).charAt(0);
-        x = Number(xString);
-        yString = String(i).charAt(1);
-        y = Number(yString);
-      }
-      if (playersGridPoints[i].innerText != "") {
-        return;
-      } else {
-        Comp.attack(henrysBoard, x, y);
-        if (Object.values(henrysBoard.grid[x][y]).includes("miss!")) {
-          document.querySelector(`#player${i}`).innerText = "MISS";
-        } else if (
-          henrysBoard.grid[x][y] != null ||
-          henrysBoard.grid[x][y].sunkStatus == false
-        ) {
-          document.querySelector(`#player${i}`).innerText = "X";
-          document.querySelector(`#player${i}`).style.backgroundColor = "red";
-          console.log(henrysBoard.grid[x][y]);
-          if (henrysBoard.checkIfAllShipsSunk()) {
-            prompt("Computer beats Player");
-          }
-        } else {
-          document.querySelector(`#player${i}`).innerText = "MISS";
-        }
-      }
+      console.log(`Computer selects Player at ${i}`);*/
+    //following formula prevents bugs if i is < 10
+    if (i < 10) {
+      x = 0;
+      y = i;
     } else {
-      randomComputerSelect();
+      xString = String(i).charAt(0);
+      x = Number(xString);
+      yString = String(i).charAt(1);
+      y = Number(yString);
     }
+    if (playersGridPoints[i].innerText != "") {
+      return;
+    } else {
+      Comp.attack(henrysBoard, x, y);
+      if (Object.values(henrysBoard.grid[x][y]).includes("miss!")) {
+        document.querySelector(`#player${i}`).innerText = "MISS";
+      } else if (
+        henrysBoard.grid[x][y] != null ||
+        henrysBoard.grid[x][y].sunkStatus == false
+      ) {
+        document.querySelector(`#player${i}`).innerText = "X";
+        document.querySelector(`#player${i}`).style.backgroundColor = "red";
+        console.log(henrysBoard.grid[x][y]);
+        if (henrysBoard.checkIfAllShipsSunk()) {
+          prompt("Player Beats Computer!");
+        }
+      } else {
+        document.querySelector(`#player${i}`).innerText = "MISS";
+      }
+    }
+
+    randomComputerSelect();
   });
 }
 
@@ -180,7 +180,7 @@ function randomComputerSelect() {
       document.querySelector(`#computer${j}`).style.backgroundColor = "red";
       console.log(compBoard.grid[x][y]);
       if (compBoard.checkIfAllShipsSunk()) {
-        prompt("Player beats Computer!");
+        prompt("Computer Beats Player!");
       }
     } else {
       document.querySelector(`#computer${j}`).innerText = "MISS";
